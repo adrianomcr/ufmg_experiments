@@ -357,7 +357,7 @@ if __name__ == '__main__':
 
     # Convergence intensity of the vector field
     global kf
-    kf = 5.0
+    kf = 2.0
 
     # Constant relative to the feedback linearization controller
     global d
