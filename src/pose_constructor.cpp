@@ -23,7 +23,10 @@
 
 
 
-double pos[3], quat[4];
+double pos[3], quat[4], yaw;
+
+int count_gps, count_imu;
+double cx_gps, cy_gps, center_yaw;
 
 
 void gps_callback(const sensor_msgs::NavSatFixConstPtr& gps)
@@ -34,11 +37,22 @@ void gps_callback(const sensor_msgs::NavSatFixConstPtr& gps)
      char zone;
      LLtoUTM(gps->latitude, gps->longitude,  northing, easting , &zone);
 
-     pos[0] = easting-609102.0;
-     pos[1] = northing-7802620.0;
-     pos[2] = 0.0;
 
-     cout << northing-7802620.0 << "\t\t"<< easting-609102.0 << endl;
+
+     if (count_gps < freq){
+       count_gps++;
+       cx_gps += easting/freq;
+       cy_gps += northing/frrq;
+     }
+     else{
+       pos[0] = easting-cx_gps;
+       pos[1] = northing-cy_gps;
+       pos[2] = 0.0;
+     }
+
+
+
+     //cout << easting-cx_gps << "\t\t"<< northing-cy_gps << endl;
 
 }
 
@@ -46,13 +60,30 @@ void gps_callback(const sensor_msgs::NavSatFixConstPtr& gps)
 void imu_callback(const sensor_msgs::ImuConstPtr& imu)
 {
 
-     // Transform to UTM reference system
-     int i = 0;
-
      quat[0] = imu->orientation.x;
      quat[1] = imu->orientation.y;
      quat[2] = imu->orientation.z;
      quat[3] = imu->orientation.w;
+
+     double r, p, y;
+     tf::Matrix3x3 rotMatrix(tf::Quaternion(quat[0],quat[1],quat[2],quat[3]));
+
+     // Get roll, pitch and yaw
+     rotMatrix.getRPY(r, p, y);
+     yaw = y;
+
+
+     if (count_imu < freq){
+       count_imu++;
+       center_yaw += yaw/freq;
+     }
+     else{
+       yaw = y - center_yaw;
+     }
+
+     //cout << "yaw = " << yaw*180/3.141592 << endl;
+     //cout << "roll, pitch, yaw = " << "\t" << r*180/3.141592 << "\t" << p*180/3.141592 << "\t" << yaw*180/3.141592 << endl;
+     //printf("roll, pitch, yaw = \t %.4f\t%.4f\t%.4f\n",r*180/3.141592,p*180/3.141592,y*180/3.141592);
 }
 
 
@@ -63,7 +94,7 @@ int main(int argc, char **argv) {
   ros::init(argc, argv, "pose_constructor");
   ros::NodeHandle nh;
 
-  double freq = 10.0;
+  double freq = 20.0;
 
 
   ros::Subscriber gps_sub = nh.subscribe<sensor_msgs::NavSatFix>("/fix", 1, gps_callback);
@@ -78,6 +109,9 @@ int main(int argc, char **argv) {
 
 
   int i = 0;
+  count_gps = 0;
+  count_imu = 0;
+  cx_gps = 0; cy_gps = 0; center_yaw = 0;
 
   geometry_msgs::Pose espeleo_pose;
 
@@ -89,6 +123,9 @@ int main(int argc, char **argv) {
   //pos[0] = 1.0; pos[1] = 2.0; pos[2] = 3.0;
   //quat[0] = 0.0; quat[1] = 0.0; quat[2] = 0.0; quat[3] = 0.0;
 
+
+  FILE *f;
+  f = fopen("/home/adrianomcr/ROS_projects/vale_ws/src/ufmg_experiments/text/results.txt", "w");
 
 
 
@@ -102,6 +139,8 @@ int main(int argc, char **argv) {
     //cout << i << endl;
     i++;
 
+
+    fprintf(f,"%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\n",pos[0],pos[1],pos[2],quat[0],quat[1],quat[2],quat[3],yaw);
 
 
     // Uptade the rost variable to be publishe
@@ -158,6 +197,12 @@ int main(int argc, char **argv) {
   }
 
 
+
+  //Terminate if ros is not ok
+  if(!ros::ok()){
+    // Close results file
+    fclose(f);
+  }
 
 
 
