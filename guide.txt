@@ -1,0 +1,22 @@
+--------------------------------------------
+Planejamento do experimento
+--------------------------------------------
+
+
+Colocar o robo virado para o leste, na posição 00
+
+
+rodar o launch com os seguintes nós: "experimento_campo_futebol.launch"
+- pose_constructor - vai setar o "00" do robo e gerar a pose
+- vec_field_ufmg.py - vai esperar uma trajetória
+
+
+
+esperar um tempinho (um segundo pelo menos). Isso serve para o codigo detectar o leste
+
+
+rodar o example trajectory
+rosrun espeleo_planning example_trajectories_ufmg.py N_CURVE N_POINTS
+1 - oito
+2 - ellipse
+3 - quadrado

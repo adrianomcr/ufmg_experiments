@@ -1,18 +1,27 @@
 
 
 % M = dlmread('./../text/results_quadrado.txt'); delta = 20*pi/180;
-M = dlmread('./../text/results_oito.txt'); delta = -80*pi/180;
+% M = dlmread('./../text/results_oito.txt'); delta = -80*pi/180;
 % M = dlmread('./../text/results_circulo.txt'); delta = -120*pi/180;
 
+M = dlmread('./../text/results_quadrado_proc.txt'); delta = 110*pi/180;
+% M = dlmread('./../text/results_oito_proc.txt'); delta = 160*pi/180;
+% M = dlmread('./../text/results_circulo_proc.txt'); delta = 130*pi/180;
+
+
+
+
+
+close all
 
 x = M(:,1);
 y = M(:,2);
 yaw = M(:,8) + delta;
 
 
-[B,A] = butter(2,0.1);
-x = filtfilt(B,A,x);
-y = filtfilt(B,A,y);
+% [B,A] = butter(2,0.1);
+% x = filtfilt(B,A,x);
+% y = filtfilt(B,A,y);
 
 plot(x,y,'r');
 axis equal

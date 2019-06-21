@@ -4,9 +4,9 @@
 
 
 <!--PLAY BAG FILE-->
-<node pkg = "rosbag" name = "bag_node" type = "play" args="$(find ufmg_experiments)/bags/2019-06-20-11-23-34_campo_de_futebol_circulo.bag" output="screen" launch-prefix="xterm -e">
-<!--node pkg = "rosbag" name = "bag_node" type = "play" args="$(find ufmg_experiments)/bags/2019-06-20-11-25-12_campo_de_futebol_8.bag " output="screen" launch-prefix="xterm -e">
-<node pkg = "rosbag" name = "bag_node" type = "play" args="$(find ufmg_experiments)/bags/2019-06-20-11-37-23_campo_de_futebol_quadrado.bag" output="screen" launch-prefix="xterm -e"-->
+<node pkg = "rosbag" name = "bag_node" type = "play" args="$(find ufmg_experiments)/bags/2019-06-20-11-37-23_campo_de_futebol_quadrado.bag" output="screen" launch-prefix="xterm -e">
+<!--node pkg = "rosbag" name = "bag_node" type = "play" args="$(find ufmg_experiments)/bags/2019-06-20-11-23-34_campo_de_futebol_circulo.bag" output="screen" launch-prefix="xterm -e">
+<node pkg = "rosbag" name = "bag_node" type = "play" args="$(find ufmg_experiments)/bags/2019-06-20-11-25-12_campo_de_futebol_8.bag " output="screen" launch-prefix="xterm -e"-->
 
 </node>
 

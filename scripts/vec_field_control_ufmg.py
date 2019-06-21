@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from geometry_msgs.msg import Twist, Polygon
+from geometry_msgs.msg import Twist, Polygon, Pose
 from nav_msgs.msg import Odometry
 from math import sqrt, atan2, exp, atan, cos, sin, acos, pi, asin, atan2
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
@@ -45,6 +45,21 @@ def callback_pose(data):
             pos[1] = T.transform.translation.y
             pos[2] = T.transform.translation.z
             rpy = euler
+
+    return
+# ----------  ----------  ----------  ----------  ----------
+
+
+
+# Callback to get the pose of the robot
+def callback_pose_ufmg(data):
+    global pos, rpy
+
+    pos[0] = data.position.x
+    pos[1] = data.position.y
+    pos[2] = data.position.z
+
+    rpy[2] = data.orientation.x # TEMPORARIO !!!!!!!!!!!!!!!!!!!!!!!!!!! ISSO NAO EH UM QUATERNIO
 
     return
 # ----------  ----------  ----------  ----------  ----------
@@ -266,8 +281,11 @@ def vector_field():
     # Init node
     rospy.init_node("vector_field")
     # Subscribers
-    rospy.Subscriber("/tf", TFMessage, callback_pose) # ground thruth
+    #rospy.Subscriber("/tf", TFMessage, callback_pose) # ground thruth
     rospy.Subscriber("/espeleo/traj_points", Polygon, callback_trajectory) # points of the curve to be followed
+    rospy.Subscriber("/espeleo/pose_gps_imu", Pose, callback_pose_ufmg) # ground thruth
+
+
 
     # Publishers for rviz
     pub_rviz_ref = rospy.Publisher("/visualization_marker_ref", Marker, queue_size=1) #rviz marcador de velocidade de referencia

@@ -39,14 +39,15 @@ void gps_callback(const sensor_msgs::NavSatFixConstPtr& gps)
 
 
 
-     if (count_gps < freq){
+     if (count_gps < 20){
        count_gps++;
-       cx_gps += easting/freq;
-       cy_gps += northing/frrq;
+       cx_gps += easting/20.0;
+       cy_gps += northing/20.0;
      }
      else{
-       pos[0] = easting-cx_gps;
-       pos[1] = northing-cy_gps;
+       double alpha = 0.08;
+       pos[0] = (1-alpha)*pos[0] + alpha*(easting-cx_gps);
+       pos[1] = (1-alpha)*pos[1] + alpha*(northing-cy_gps);
        pos[2] = 0.0;
      }
 
@@ -73,9 +74,9 @@ void imu_callback(const sensor_msgs::ImuConstPtr& imu)
      yaw = y;
 
 
-     if (count_imu < freq){
+     if (count_imu < 20){
        count_imu++;
-       center_yaw += yaw/freq;
+       center_yaw += yaw/20.0;
      }
      else{
        yaw = y - center_yaw;
@@ -147,10 +148,10 @@ int main(int argc, char **argv) {
     espeleo_pose.position.x = pos[0];
     espeleo_pose.position.y = pos[1];
     espeleo_pose.position.z = pos[2];
-    espeleo_pose.orientation.x = quat[0];
-    espeleo_pose.orientation.y = quat[1];
-    espeleo_pose.orientation.z = quat[2];
-    espeleo_pose.orientation.w = quat[3];
+    espeleo_pose.orientation.x = quat[0]*0 + yaw;
+    espeleo_pose.orientation.y = quat[1]*0 + yaw;
+    espeleo_pose.orientation.z = quat[2]*0 + yaw;
+    espeleo_pose.orientation.w = quat[3]*0 + yaw;
 
     // Publish rateThrust command
     pose_pub.publish(espeleo_pose);

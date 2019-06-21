@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<launch>
+
+
+<!--Run the node that plots stuff on rviz-->
+<node pkg = "ufmg_experiments" name = "pose_constructor" type = "pose_constructor" args="" output="screen">
+</node>
+
+
+<!--Run the node that controls the robot with vector fields -->
+<node pkg = "ufmg_experiments" name = "vector_field" type = "vec_field_control_ufmg.py" args="" output="screen">
+</node>
+
+
+</launch>

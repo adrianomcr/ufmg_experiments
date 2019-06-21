@@ -10,6 +10,7 @@ Panels:
         - /TF1
         - /TF1/Frames1
         - /PointCloud1
+        - /Polygon1
       Splitter Ratio: 0.5
     Tree Height: 230
   - Class: rviz/Selection
@@ -107,7 +108,7 @@ Visualization Manager:
       Marker Topic: /visualization_marker_array
       Name: MarkerArray
       Namespaces:
-        {}
+        "": true
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -145,8 +146,16 @@ Visualization Manager:
       Marker Topic: /visualization_marker_ref
       Name: Marker
       Namespaces:
-        {}
+        "": true
       Queue Size: 100
+      Value: true
+    - Alpha: 1
+      Class: rviz/Polygon
+      Color: 25; 255; 0
+      Enabled: true
+      Name: Polygon
+      Topic: ""
+      Unreliable: false
       Value: true
   Enabled: true
   Global Options:
@@ -173,7 +182,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 15.5805712
+      Distance: 29.8292351
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -188,10 +197,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 1.38479698
+      Pitch: 1.05979753
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.12677622
+      Yaw: 4.51994371
     Saved: ~
 Window Geometry:
   Displays:

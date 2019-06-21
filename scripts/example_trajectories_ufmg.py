@@ -30,11 +30,11 @@ Adriano M. C. Rezende, <adrianomcr18@gmail.com>
 def refference_trajectory_1(N):
 
     # Geometric parameters
-    a = 3.0 # height of the "8"
-    b = 1.5 # width of the "8"
+    a = 15.0 # height of the "8"
+    b = 7.0 # width of the "8"
     cx = 0 # center x
-    cy = 0 # center y
-    phi = pi / 4 # rotation angle of the curve
+    cy = -1.0 # center y
+    phi = -52*pi/180.0 # rotation angle of the curve
 
     # Parameter
     dp = 2*pi/N
@@ -71,11 +71,11 @@ def refference_trajectory_2(N):
 
 
     # Geometric parameters
-    a = 3 # semiaxis x
-    b = 1.5 # semiaxis y
+    a = 14 # semiaxis x
+    b = 10 # semiaxis y
     cx = 0 # center x
-    cy = 0 # center y
-    phi = pi / 4 # rotation angle of the curve
+    cy = -1.0 # center y
+    phi = -52*pi/180.0 # rotation angle of the curve
 
     # Parameter
     dp = 2*pi/N
@@ -110,12 +110,12 @@ def refference_trajectory_2(N):
 def refference_trajectory_3(N):
 
     # Geometric parameters
-    a = 2**(-4) #
+    a = 16.0 #
     b = 0 #
-    c = 2**(-4) #
+    c = 12.0 #
     cx = 0 # center x
-    cy = 0 # cewnter y
-    phi = 0 # rotation angle of the curve
+    cy = -1.0 # cewnter y
+    phi = -52*pi/180.0 # rotation angle of the curve
 
     # Parameter
     dp = 2*pi/N
@@ -128,9 +128,9 @@ def refference_trajectory_3(N):
         p = p + dp
 
         # Compute a point of the "rectangular" in a local frame
-        r = (a*cos(p)**4 + b*cos(p)**2*sin(p)**2 + c*sin(p)**4)**(-0.25)
-        x_ref0 = r * cos(p)
-        y_ref0 = r * sin(p)
+        r = (1.0*cos(p)**4 + 0.0*cos(p)**2*sin(p)**2 + 1.0*sin(p)**4)**(-0.25)
+        x_ref0 = (a/2.0) * r * cos(p)
+        y_ref0 = (c/2.0) * r * sin(p)
 
         # Rotate and displace the point
         x_ref = cos(phi) * x_ref0 - sin(phi) * y_ref0 + cx * 1
