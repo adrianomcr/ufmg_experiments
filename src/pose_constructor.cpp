@@ -73,7 +73,7 @@ void imu_callback(const sensor_msgs::ImuConstPtr& imu)
      rotMatrix.getRPY(r, p, y);
      yaw = y;
 
-
+	
      if (count_imu < 20){
        count_imu++;
        center_yaw += yaw/20.0;
@@ -82,9 +82,6 @@ void imu_callback(const sensor_msgs::ImuConstPtr& imu)
        yaw = y - center_yaw;
      }
 
-     //cout << "yaw = " << yaw*180/3.141592 << endl;
-     //cout << "roll, pitch, yaw = " << "\t" << r*180/3.141592 << "\t" << p*180/3.141592 << "\t" << yaw*180/3.141592 << endl;
-     //printf("roll, pitch, yaw = \t %.4f\t%.4f\t%.4f\n",r*180/3.141592,p*180/3.141592,y*180/3.141592);
 }
 
 
@@ -100,10 +97,6 @@ int main(int argc, char **argv) {
 
   ros::Subscriber gps_sub = nh.subscribe<sensor_msgs::NavSatFix>("/fix", 1, gps_callback);
   ros::Subscriber imu_sub = nh.subscribe<sensor_msgs::Imu>("/imu/data", 1, imu_callback);
-  //ros::Subscriber ground_truth_sub = nh.subscribe<tf2_msgs::TFMessage>("/tf", 1, getStates);
-  //ros::Publisher vel_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
-	//ros::Publisher thrust_rate_pub = nh.advertise<mav_msgs::RateThrust>("/uav/input/rateThrust", 1);
-  //ros::Publisher curve_now_pub = nh.advertise<std_msgs::Int32>("/path/curve_now", 1);
   ros::Publisher pose_pub = nh.advertise<geometry_msgs::Pose>("/espeleo/pose_gps_imu", 1);
   ros::Publisher rviz_pose_pub = nh.advertise<visualization_msgs::Marker>("/visualization_marker_espeleo_ufmg", 1);
   ros::Rate loop_rate(freq);
@@ -121,13 +114,16 @@ int main(int argc, char **argv) {
 
   int state = 0; // 0 - take off; 1 - follow vector field
 
-  //pos[0] = 1.0; pos[1] = 2.0; pos[2] = 3.0;
-  //quat[0] = 0.0; quat[1] = 0.0; quat[2] = 0.0; quat[3] = 0.0;
 
+  string resultsFile;
+  nh.param<std::string>( "/espeleo/experimentResultsFile", resultsFile, "/home/espeleo/results.txt" );
 
   FILE *f;
-  f = fopen("/home/adrianomcr/ROS_projects/vale_ws/src/ufmg_experiments/text/results.txt", "w");
-
+  f = fopen(resultsFile.c_str(), "w");
+  if (f==NULL){
+    ROS_ERROR("Can not open file 'results.txt'.");
+    return -1;
+  }
 
 
   while (ros::ok())
@@ -158,11 +154,6 @@ int main(int argc, char **argv) {
 
 
 
-
-
-
-
-
     espeleo_marker.header.frame_id = "/world";
     espeleo_marker.header.stamp = ros::Time::now();
     espeleo_marker.id = 0;
@@ -185,11 +176,6 @@ int main(int argc, char **argv) {
     espeleo_marker.pose.orientation.w = quat[3];
 
     rviz_pose_pub.publish(espeleo_marker);
-
-
-
-
-
 
 
 
