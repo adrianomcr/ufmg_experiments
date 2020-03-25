@@ -125,8 +125,8 @@ int main(int argc, char **argv) {
   //quat[0] = 0.0; quat[1] = 0.0; quat[2] = 0.0; quat[3] = 0.0;
 
 
-  FILE *f;
-  f = fopen("/home/adrianomcr/ROS_projects/vale_ws/src/ufmg_experiments/text/results.txt", "w");
+  //FILE *f;
+  //f = fopen("/home/adrianomcr/ROS_projects/vale_ws/src/ufmg_experiments/text/results.txt", "w");
 
 
 
@@ -141,7 +141,7 @@ int main(int argc, char **argv) {
     i++;
 
 
-    fprintf(f,"%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\n",pos[0],pos[1],pos[2],quat[0],quat[1],quat[2],quat[3],yaw);
+    //fprintf(f,"%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\n",pos[0],pos[1],pos[2],quat[0],quat[1],quat[2],quat[3],yaw);
 
 
     // Uptade the rost variable to be publishe
@@ -162,37 +162,6 @@ int main(int argc, char **argv) {
 
 
 
-
-    espeleo_marker.header.frame_id = "/world";
-    espeleo_marker.header.stamp = ros::Time::now();
-    espeleo_marker.id = 0;
-    espeleo_marker.type = espeleo_marker.CUBE;
-    espeleo_marker.action = espeleo_marker.ADD;
-    espeleo_marker.scale.x = 0.50;
-    espeleo_marker.scale.y = 0.30;
-    espeleo_marker.scale.z = 0.12;
-    espeleo_marker.color.a = 0.9;
-    espeleo_marker.color.r = 0.9;
-    espeleo_marker.color.g = 0.9;
-    espeleo_marker.color.b = 0.0;
-    espeleo_marker.pose.position.x = pos[0];
-    espeleo_marker.pose.position.y = pos[1];
-    espeleo_marker.pose.position.z = pos[2];
-    //quaternio = [esp_q[0], esp_q[1], esp_q[2], esp_q[3]]
-    espeleo_marker.pose.orientation.x = quat[0];
-    espeleo_marker.pose.orientation.y = quat[1];
-    espeleo_marker.pose.orientation.z = quat[2];
-    espeleo_marker.pose.orientation.w = quat[3];
-
-    rviz_pose_pub.publish(espeleo_marker);
-
-
-
-
-
-
-
-
     // Sleep program
     loop_rate.sleep();
   }
@@ -200,10 +169,10 @@ int main(int argc, char **argv) {
 
 
   //Terminate if ros is not ok
-  if(!ros::ok()){
-    // Close results file
-    fclose(f);
-  }
+  //if(!ros::ok()){
+  //  // Close results file
+  //  fclose(f);
+  //}
 
 
 
