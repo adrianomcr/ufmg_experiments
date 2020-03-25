@@ -17,9 +17,8 @@ E dar um:
 
 Colocar o robô virado para o leste, na posição 000 (x, y, yaw) desejada.
 
-Rodar todos os .launch que foram rodados no experimento da quarta-feira, exceto o do joystick. A gui não é essencial mas pode ser chamada também.
+Ligar o robô e checar se o bringup foi executado adequadamente.
 
-`roslaunch TUDO QUE FOI RODADO ANTES MENOS JOYSTICK`
 
 Rodar o seguinte launch:
 
@@ -39,7 +38,5 @@ Rodar o códico que vai gerar uma trajetória exemplo.
 - N_CURVE = 2  =>  elipse
 - N_CURVE = 3  =>  "quadrado" sem quinas
 
-Recomendo N_POINTS = 1000 ~ 2000.
-
-Se tudo der certo o robô começa a andar e seguir a curva.
+Recomendo N_POINTS = 1000 ~ 2000. Checar os parâmetros das curvas dentro do arquivo example_trajectories_ufmg.py
 

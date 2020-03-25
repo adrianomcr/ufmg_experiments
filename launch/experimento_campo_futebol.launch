@@ -6,6 +6,7 @@
 <!--Run the node that plots stuff on rviz-->
 <node pkg = "ufmg_experiments" name = "pose_constructor" type = "pose_constructor" args="" output="screen">
 </node>
+<!--param name="/espeleo/experimentResultsFile" type="string" value="$(find ufmg_experiments)/text/results.txt" /-->
 
 
 <!--Run the node that controls the robot with vector fields -->
